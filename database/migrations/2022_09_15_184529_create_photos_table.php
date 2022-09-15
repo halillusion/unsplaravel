@@ -17,10 +17,9 @@ class CreatePhotosTable extends Migration
             $table->id();
             $table->string('photo_id')->unique();
             $table->string('artist_id');
-            $table->string('color');
-            $table->string('description');
-            $table->string('likes');
-            $table->string('location');
+            $table->string('color')->nullable();
+            $table->text('description')->nullable();
+            $table->integer('likes')->nullable();
             $table->timestamps();
         });
     }

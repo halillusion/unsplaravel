@@ -8,6 +8,13 @@ class Photos extends Model
 {
 
     /**
+     * The table associated with the model.
+     *
+     * @var string
+     */
+    protected $table = 'photos';
+
+    /**
      * The attributes that are mass assignable.
      *
      * @var array<int, string>
@@ -20,4 +27,14 @@ class Photos extends Model
         'likes',
         'location',
     ];
+
+    public function pivot()
+    {
+        return $this->hasManyThrough(PhotosPivot::class, 'photo_id');
+    }
+
+    public function artist()
+    {
+        return $this->belongsTo(Artists::class, 'artist_id', 'artist_id');
+    }
 }

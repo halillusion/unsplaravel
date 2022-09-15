@@ -8,6 +8,13 @@ class PhotosPivot extends Model
 {
 
     /**
+     * The table associated with the model.
+     *
+     * @var string
+     */
+    protected $table = 'photos_pivot';
+
+    /**
      * The attributes that are mass assignable.
      *
      * @var array<int, string>

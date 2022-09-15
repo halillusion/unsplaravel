@@ -17,9 +17,10 @@ class CreateArtistsTable extends Migration
             $table->id();
             $table->string('artist_id')->unique();
             $table->string('username');
-            $table->string('name');
-            $table->string('bio');
-            $table->string('location');
+            $table->string('avatar')->nullable();
+            $table->string('name')->nullable();
+            $table->text('bio')->nullable();
+            $table->string('location')->nullable();
             $table->string('link');
             $table->timestamps();
         });

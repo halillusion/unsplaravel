@@ -1,5 +1,7 @@
 @extends('layouts.app')
 @section('title', 'Home')
 @section('content')
-    <p>This is my body content.</p>
+    @foreach ($photos as $photo)
+        <p>This is user {{ $photo->artist->name }}</p>
+    @endforeach
 @endsection

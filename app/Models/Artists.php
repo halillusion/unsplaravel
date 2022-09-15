@@ -8,6 +8,13 @@ class Artists extends Model
 {
 
     /**
+     * The table associated with the model.
+     *
+     * @var string
+     */
+    protected $table = 'artists';
+
+    /**
      * The attributes that are mass assignable.
      *
      * @var array<int, string>
