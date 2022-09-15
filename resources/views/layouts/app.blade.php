@@ -27,7 +27,7 @@
             <section class="py-5 text-center container">
                 <div class="row py-lg-5">
                     <div class="col-lg-6 col-md-8 mx-auto">
-                        <h1 class="fw-light">A sample Unsplash API Client</h1>
+                        <h1>A sample Unsplash API Client</h1>
                         <p class="lead text-muted">It is a sample project that presents the content provided by the Unsplash API. It adds 30 random photos to its database by querying once a day.</p>
                     </div>
                 </div>
