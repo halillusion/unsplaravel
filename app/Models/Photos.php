@@ -30,7 +30,7 @@ class Photos extends Model
 
     public function pivot()
     {
-        return $this->hasManyThrough(PhotosPivot::class, 'photo_id');
+        return $this->belongsTo(PhotosPivot::class, 'photo_id', 'photo_id');
     }
 
     public function artist()
