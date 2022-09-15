@@ -48,7 +48,7 @@ class UnsplashController extends Controller
      * @param photo id <int>
      * @return \Illuminate\View\View
      */
-    public function photoDetail()
+    public function photoDetail($id)
     {
         return view('unsplash.photo', [
             'photoId' => $id]
