@@ -6,6 +6,8 @@ use App\Models\Artists;
 use App\Models\Photos;
 use App\Models\PhotosPivot;
 use Illuminate\Support\Facades\Http;
+use Inertia\Inertia;
+use Illuminate\Http\Request;
  
 class UnsplashController extends Controller
 {
@@ -14,30 +16,52 @@ class UnsplashController extends Controller
      *
      * @return \Illuminate\View\View
      */
-    public function home()
+    public function home(Request $request)
     {
         $this->fetchPhotos();
 
-        $getPhotos = Photos::latest()
-            ->offset(0)
-            ->limit(10)
-            ->get();
-        
-        $totalRecord = Photos::count();
+        $perPage = 16;
+        $totalRecord = Artists::count();
+        $lastPage = !$totalRecord ? 1 : ceil($totalRecord / $perPage);
+        $page = is_numeric($request->page) ? ($totalRecord ? $request->page : 1) : 1;
+        if ($page > $lastPage)
+            $page = $lastPage;
 
-        return view('unsplash.home', [
-            'photos' => $getPhotos,
-            'total' => $totalRecord
-        ]);
+        $offset = ($page - 1) * $perPage;
+
+        $getArtists = Artists::latest()
+            ->offset($offset)
+            ->limit($perPage)
+            ->get();
+
+        return Inertia::render(
+            'Home',
+            [
+                'title' => 'Discover Unsplash Artists!',
+                'sub_title' => 'A sample Unsplash API Client',
+                'description' => 'It is a sample project that presents the content provided by the Unsplash API. It adds 30 random photos to its database by querying once a day.',
+                'artists' => $getArtists,
+                'totalRecord' => $totalRecord,
+                'page' => $page,
+                'lastPage' => $lastPage
+            ]
+        );
     }
 
     /**
      * Artist detail
-     * @param artist id <int>
+     * @param artist id <string>
      * @return \Illuminate\View\View
      */
     public function artistDetail($id)
     {
+        return Inertia::render(
+            'Artist',
+            [
+                'title' => 'Artist',
+            ]
+        );
+
         return view('unsplash.artist', [
             'artistId' => $id
         ]);
@@ -50,6 +74,14 @@ class UnsplashController extends Controller
      */
     public function photoDetail($id)
     {
+
+        return Inertia::render(
+            'Photo',
+            [
+                'title' => 'Photo',
+            ]
+        );
+
         return view('unsplash.photo', [
             'photoId' => $id]
         );

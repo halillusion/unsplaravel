@@ -15,8 +15,7 @@ use App\Http\Controllers\UnsplashController;
 */
 
 Route::controller(UnsplashController::class)->group(function () {
-    Route::get('/', 'home');
-    Route::get('/artist/{artistId}', 'artistDetail');
-    Route::get('/photo/{photoId}', 'photoDetail');
-    
+    Route::get('/', 'home')->name('homepage');
+    Route::get('/artist/{artistId}', 'artistDetail')->name('artistDetail');
+    Route::get('/photo/{photoId}', 'photoDetail')->name('photoDetail');
 });

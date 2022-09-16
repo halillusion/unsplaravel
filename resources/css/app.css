@@ -1,0 +1,195 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    font-family: "Inter", system-ui, sans-serif;
+  }
+}
+
+body {
+  @apply bg-slate-900 text-gray-100;
+}
+.navigation {
+  @apply border-b border-b-amber-400 rounded-b-[0.5rem]
+  px-2 sm:px-4 py-6 
+  shadow-lg shadow-amber-500/10
+  fixed top-0 left-0 right-0
+  backdrop-blur-md
+  bg-slate-800/90;
+}
+
+.navigation .navigation-wrap {
+  @apply container 
+  flex flex-wrap 
+  justify-between items-center 
+  mx-auto;
+}
+
+.navigation .navigation--brand {
+  @apply self-center 
+  text-xl font-semibold whitespace-nowrap 
+  text-white 
+  font-['Nabla'] 
+  mx-auto md:mx-0
+}
+
+.navigation .navigation--links {
+  @apply w-full md:w-auto;
+}
+
+.navigation .navigation--links ul {
+  @apply flex flex-col 
+  md:flex-row md:space-x-8 md:mt-0 
+  md:text-sm md:font-medium;
+}
+
+.navigation .navigation--links ul li a {
+  @apply block 
+  py-2 pr-4 pl-3 
+  rounded
+  bg-transparent
+  hover:bg-amber-500
+  text-slate-400 
+  hover:shadow-md
+  transition-all duration-150 ease-in-out
+ hover:text-amber-900;
+}
+
+main {
+  @apply min-h-[calc(100vh-6rem)] mt-[5rem];
+}
+
+.hero {
+  @apply bg-gradient-to-r from-orange-500 to-amber-500
+  text-white 
+  py-20 
+  px-4 sm:px-6 lg:px-40
+  text-center;
+}
+
+.hero h1 {
+  @apply font-bold 
+  mb-4
+  text-2xl md:text-4xl;
+}
+
+.hero p {
+  @apply 
+  font-medium
+  max-w-2xl
+  mx-auto
+  tracking-tight
+  text-lg md:text-xl;
+}
+
+.artists {
+  @apply 
+  container mx-auto my-20;
+}
+
+.artists > h2 {
+  @apply 
+  text-center text-2xl font-semibold my-16;
+}
+
+.artists .artists-list {
+  @apply w-full
+  grid 
+  lg:grid-cols-4 lg:gap-4
+  md:grid-cols-3 md:gap-3
+  sm:grid-cols-2 sm:gap-2
+  grid-cols-1 gap-1
+  m-2;
+}
+
+.artists .artists-list .artist-list--item {
+  @apply w-full;
+}
+
+.artist-card {
+  @apply w-full
+  rounded-lg border-2
+  min-h-[25rem]
+  shadow-md bg-slate-800 border-slate-700
+  hover:border-amber-500
+  hover:shadow-lg hover:shadow-amber-500/20 hover:bg-slate-900
+  transition-all duration-150 ease-in-out
+  grid
+}
+
+.artist-card .artist-card-body {
+  @apply flex flex-col items-center py-10 pb-5 px-5 justify-around flex-nowrap h-full w-full
+}
+
+.artist-card .artist-card-body img {
+  @apply mb-3 w-24 h-24 rounded-full shadow-lg
+}
+
+.artist-card .artist-card-body h5 {
+  @apply mb-1 text-xl font-medium text-white
+}
+
+.artist-card .artist-card-body span {
+  @apply text-sm text-gray-400 my-auto block text-clip overflow-hidden max-h-[7.5rem]
+}
+
+.artist-card .artist-card-body .artist-card--buttons {
+  @apply flex mt-4 space-x-3 md:mt-6
+}
+
+.pagination {
+  @apply flex flex-col items-center justify-center w-full my-10;
+}
+
+.pagination ul {
+  @apply inline-flex -space-x-px;
+}
+
+.pagination ul li a {
+  @apply py-2 px-3 ml-0 leading-tight border 
+  bg-gray-800 border-gray-700 text-gray-400 hover:bg-gray-700 hover:text-white
+}
+
+.pagination ul li:first-child a {
+  @apply rounded-l-lg border;
+}
+
+.pagination ul li:last-child a {
+  @apply rounded-r-lg border;
+}
+
+.pagination ul li a.active {
+  @apply 
+  border-gray-700 bg-gray-700 text-white
+}
+
+.btn {
+  @apply inline-flex items-center 
+  py-2 px-4 
+  text-sm font-medium text-center 
+  transition-all duration-150 ease-in-out
+  hover:-translate-y-0.5
+  rounded-lg 
+}
+
+.btn-primary {
+  @apply text-white bg-amber-500 
+  hover:bg-amber-600 focus:ring-4 focus:ring-amber-500
+}
+
+.btn-secondary {
+  @apply border
+  focus:ring-4
+  bg-slate-800 text-white border-slate-600 hover:bg-slate-700 
+  hover:border-slate-700 focus:ring-slate-600
+}
+
+.alert {
+  @apply p-2 rounded-lg rounded-l-none border-l-2 max-w-lg mx-auto
+}
+
+.alert-danger {
+  @apply text-red-300 bg-rose-900 border-red-300
+}
