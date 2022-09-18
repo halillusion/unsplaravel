@@ -8,15 +8,21 @@
   }
 }
 
+svg {
+  @apply inline-block;
+}
+
 body {
   @apply bg-slate-900 text-gray-100;
 }
+
 .navigation {
   @apply border-b border-b-amber-400 rounded-b-[0.5rem]
   px-2 sm:px-4 py-6 
   shadow-lg shadow-amber-500/10
   fixed top-0 left-0 right-0
   backdrop-blur-md
+  z-50
   bg-slate-800/90;
 }
 
@@ -131,8 +137,8 @@ main {
   @apply mb-1 text-xl font-medium text-white
 }
 
-.artist-card .artist-card-body span {
-  @apply text-sm text-gray-400 my-auto block text-clip overflow-hidden max-h-[7.5rem]
+.artist-card .artist-card-body p {
+  @apply text-sm text-gray-400 my-auto text-clip overflow-hidden max-h-[7.5rem] break-all text-justify
 }
 
 .artist-card .artist-card-body .artist-card--buttons {
@@ -165,6 +171,231 @@ main {
   border-gray-700 bg-gray-700 text-white
 }
 
+.pagination ul li a.disabled {
+  @apply 
+  pointer-events-none cursor-none
+}
+
+.artist-hero {
+  @apply bg-gradient-to-b from-amber-900/30 to-slate-900
+  text-white 
+  py-20 
+  px-4 sm:px-6 lg:px-40
+  min-h-[50vh]
+  flex flex-col justify-center items-center
+  border-b-4 border-b-amber-500
+  text-center relative;
+}
+
+.artist-hero h1 {
+  @apply font-bold 
+  mb-4
+  text-2xl md:text-4xl overflow-hidden;
+}
+
+.artist-hero p {
+  @apply 
+  font-medium
+  max-w-2xl
+  mx-auto
+  tracking-tight
+  mb-6
+  text-lg md:text-xl;
+}
+
+.artist-hero p span {
+  @apply text-slate-400 text-sm block mb-2;
+}
+
+.artist-hero p a {
+  @apply text-amber-500 text-sm hover:text-amber-50 mt-2 block;
+}
+
+.artist-hero img.artist-avatar {
+  @apply border-4 border-amber-500 mx-auto w-32 h-32 rounded-full mt-auto -mb-36;
+}
+
+.artist-hero .artist-bg {
+  @apply absolute inset-0 w-full h-full z-[-1] overflow-hidden;
+}
+
+.artist-hero .artist-bg img {
+  @apply w-full object-cover object-center h-full blur-lg sticky top-0;
+}
+
+.photos {
+  @apply 
+  container mx-auto my-20;
+}
+
+.photos > h2 {
+  @apply 
+  text-center text-2xl font-semibold my-16;
+}
+
+.photos .photos-list {
+  @apply w-full
+  grid 
+  lg:grid-cols-4 lg:gap-4
+  md:grid-cols-3 md:gap-3
+  sm:grid-cols-2 sm:gap-2
+  grid-cols-1 gap-1
+  m-2;
+}
+
+.photos .photos-list .artist-list--item {
+  @apply w-full;
+}
+
+.photo-card {
+  @apply w-full
+  rounded-lg border-2
+  min-h-[25rem]
+  shadow-md bg-slate-800 border-slate-700
+  hover:border-amber-500
+  hover:shadow-lg hover:shadow-amber-500/20 hover:bg-slate-900
+  transition-all duration-150 ease-in-out
+  grid overflow-hidden
+  relative
+}
+
+.photo-card > .likes {
+  @apply absolute
+  top-2 right-2 bottom-auto
+  text-sm font-thin
+  px-2 py-1 rounded-lg
+  text-white
+  bg-black bg-opacity-50
+  backdrop-blur-sm
+}
+
+.photo-card > .likes svg {
+  @apply text-rose-600
+}
+
+.photo-card > .description {
+  @apply absolute 
+  left-0 right-0 bottom-0 
+  p-2 text-center
+  w-full
+  min-h-[5rem]
+  bg-gradient-to-b from-black/0 to-black
+}
+
+.photo-card .photo-card-body {
+  @apply flex flex-col items-center justify-between flex-nowrap h-full w-full text-center
+}
+
+.photo-card .photo-card-body img {
+  @apply w-full h-[25rem] object-cover object-center rounded-md
+}
+
+.photo-detail {
+  @apply relative block;
+}
+
+.photo-detail .cover {
+  @apply 
+  w-full
+  h-[50vh]
+  bg-cover bg-center bg-no-repeat
+  relative
+  overflow-hidden z-0
+  opacity-50
+  mb-10;
+}
+
+.photo-detail .cover .bg {
+  @apply blur-md
+  w-full
+  h-full
+  object-cover object-center;
+}
+
+.photo-detail .content {
+  @apply container mx-auto 
+  mt-5 mb-32 z-10 relative;
+}
+
+.photo-detail .content .image {
+  @apply w-full h-full rounded-lg border-2 border-slate-900 -mt-[calc(50vh-10rem)] shadow-xl shadow-black;
+}
+
+.photo-detail .content .info {
+  @apply absolute 
+  bottom-0 left-0 right-0 
+  bg-gradient-to-b from-slate-900/30 to-slate-900 
+  rounded-b-lg
+  p-2 md:p-6
+  backdrop-blur-md;
+}
+
+.photo-detail .content .info {
+  @apply flex flex-col md:flex-row items-center justify-between flex-nowrap;
+}
+
+.photo-detail .content .description {
+  @apply text-lg font-light flex flex-col items-start justify-between;
+}
+
+.photo-detail .content .description p span {
+  @apply w-4 h-4 inline-block mr-2 rounded-full;
+}
+
+.photo-detail .content .description .download-links {
+  @apply flex flex-row flex-wrap items-center justify-center font-semibold text-sm mt-auto;
+}
+
+.photo-detail .content .description .download-links span {
+  @apply mr-2;
+}
+
+.photo-detail .content .description .download-links a {
+  @apply mx-2 hover:text-amber-500
+  transition-all duration-150 ease-in-out;
+}
+
+.photo-detail .content .summary {
+  @apply flex flex-col justify-center items-center flex-nowrap;
+}
+
+.photo-detail .content .summary .likes {
+  @apply mx-auto md:ml-auto md:mr-0 mt-2 text-sm font-thin mb-10;
+}
+
+.photo-detail .content .summary .likes svg {
+  @apply text-rose-600;
+}
+
+.photo-detail .content .summary .links {
+  @apply flex flex-col justify-center items-center flex-nowrap;
+}
+
+.photo-detail .content .summary .links a {
+  @apply flex flex-row justify-between items-center flex-nowrap
+  text-base font-medium 
+  rounded-md 
+  bg-neutral-900/30 hover:bg-neutral-900/50 hover:shadow-md 
+  transition-all duration-150 ease-in-out
+  px-4 py-2 my-2 w-full;
+}
+
+.photo-detail .content .summary .links a img {
+  @apply w-12 h-12 rounded-full mr-2;
+}
+
+.photo-detail .content .summary .links a svg {
+  @apply mr-2;
+}
+
+.photo-detail .content .summary .links a span {
+  @apply flex flex-col;
+}
+
+.photo-detail .content .summary .links a span small {
+  @apply opacity-70 font-thin;
+}
+
 .btn {
   @apply inline-flex items-center 
   py-2 px-4 
@@ -192,4 +423,13 @@ main {
 
 .alert-danger {
   @apply text-red-300 bg-rose-900 border-red-300
+}
+
+footer {
+  @apply text-slate-500 text-center
+  m-8;
+}
+
+footer a {
+  @apply font-mono font-extralight text-sm hover:text-slate-100;
 }

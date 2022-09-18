@@ -37,12 +37,12 @@ class UnsplashController extends Controller
         return Inertia::render(
             'Home',
             [
-                'title' => 'Discover Unsplash Artists!',
+                'title' => 'Discover Unsplash Artists!' . ($page > 1 ? ' - Page ' . $page : ''),
                 'sub_title' => 'A sample Unsplash API Client',
                 'description' => 'It is a sample project that presents the content provided by the Unsplash API. It adds 30 random photos to its database by querying once a day.',
                 'artists' => $getArtists,
                 'totalRecord' => $totalRecord,
-                'page' => $page,
+                'currentPageNum' => (int) $page,
                 'lastPage' => $lastPage
             ]
         );
@@ -53,52 +53,108 @@ class UnsplashController extends Controller
      * @param artist id <string>
      * @return \Illuminate\View\View
      */
-    public function artistDetail($id)
+    public function artistDetail($id, Request $request)
     {
+        $getArtist = Artists::where('artist_id', $id)->first();
+        if ($getArtist)
+            $this->fetchPhotos($getArtist->username);
+        
+        $getPhotos = Photos::where('artist_id', $id)->get();
+
+        $perPage = 16;
+        $totalRecord = Photos::where('artist_id', $id)->count();
+        $lastPage = !$totalRecord ? 1 : ceil($totalRecord / $perPage);
+        $page = is_numeric($request->page) ? ($totalRecord ? $request->page : 1) : 1;
+        if ($page > $lastPage)
+            $page = $lastPage;
+
+        $offset = ($page - 1) * $perPage;
+
+        $getPhotos = Photos::latest()
+            ->where('artist_id', $id)
+            ->offset($offset)
+            ->limit($perPage)
+            ->get();
+
+        $_getPhotos = [];
+        foreach ($getPhotos as $photo) {
+            $photo  = (object) [
+                'photo_id' => $photo->photo_id,
+                'artist_id' => $photo->artist_id,
+                'color' => $photo->color,
+                'description' => $photo->description,
+                'likes' => $photo->likes,
+                'pivot' => $photo->pivot
+            ];
+            $_getPhotos[] = $photo;
+        }
+        $getPhotos = $_getPhotos;
+
         return Inertia::render(
             'Artist',
             [
-                'title' => 'Artist',
+                'title' => 'Artist' . ($getArtist ? ' - ' . $getArtist->name : ''),
+                'id' => $id,
+                'artist' => $getArtist,
+                'photos' => $getPhotos,
+                'totalRecord' => $totalRecord,
+                'currentPageNum' => (int) $page,
+                'lastPage' => $lastPage
             ]
         );
-
-        return view('unsplash.artist', [
-            'artistId' => $id
-        ]);
     }
 
     /**
      * Artist detail
-     * @param photo id <int>
+     * @param photo id <string>
      * @return \Illuminate\View\View
      */
     public function photoDetail($id)
     {
+        $getArtist = null;
+
+        $getPhoto = Photos::where('photo_id', $id)->first();
+        
+        if ($getPhoto) {
+            $getArtist = Artists::where('artist_id', $getPhoto->artist_id)->first();
+            $getPhoto->pivot = $getPhoto->pivot;
+        }
+
 
         return Inertia::render(
             'Photo',
             [
-                'title' => 'Photo',
+                'title' => 'Photo' . ($getArtist ? ' - ' . $getArtist->name : ''),
+                'id' => $id,
+                'artist' => $getArtist,
+                'photo' => $getPhoto,
             ]
-        );
-
-        return view('unsplash.photo', [
-            'photoId' => $id]
         );
     }
 
-    public function fetchPhotos() {
+    public function fetchPhotos($username = null) {
 
-        $totalRecord = Photos::count();
-        $lastRecord = Photos::latest('updated_at')->first(['updated_at']);
+        $totalRecord = ! is_null($username) ? 
+            Photos::where('artist_id', $username)->count() : 
+            Photos::count();
+
+        $lastRecord = !is_null($username) ? 
+            Photos::where('artist_id', $username)->latest('updated_at')->first(['updated_at']) : 
+            Photos::latest('updated_at')->first(['updated_at']);
+
 
         // OK, we need new records.
-        if (! $totalRecord OR strtotime('-1 day') > strtotime((string)$lastRecord->updated_at)) {
+        if (
+            ! $totalRecord OR 
+            strtotime(
+                !is_null($username) ? '-2 hours' : '-1 days'
+            ) > strtotime((string)$lastRecord->updated_at)
+        ) {
 
             $unsplashApiKey = env('UNSPLASH_API_KEY');
             $unsplashApiUrl = env('UNSPLASH_API_URL');
 
-            $response = Http::accept('application/json')->get($unsplashApiUrl . 'photos/random', [
+            $response = Http::accept('application/json')->get($unsplashApiUrl . (!is_null($username) ? 'users/'. $username.'/photos' : 'photos/random'), [
                 'client_id' => $unsplashApiKey,
                 'count' => 30,
             ]);
@@ -123,7 +179,7 @@ class UnsplashController extends Controller
                         'name' => $record->user->name,
                         'avatar' => $record->user->profile_image->large,
                         'bio' => $record->user->bio,
-                        'location' => $record->user->bio,
+                        'location' => $record->user->location,
                         'link' => $record->user->links->html
                     ];
 
