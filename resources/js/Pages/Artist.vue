@@ -38,19 +38,19 @@
         <nav v-if="lastPage > 1" class="pagination" aria-label="Portfolio list pagination">
           <ul>
             <li>
-              <Link :class="currentPageNum <= 1 ? 'disabled' : ''" :href="'/artist/'+artist.artistId+'/?page='+(currentPageNum-1)">Previous</Link>
+              <Link :class="currentPageNum <= 1 ? 'disabled' : ''" :href="'/artist/'+artist.artist_id+'/?page='+(currentPageNum-1)">Previous</Link>
             </li>
             <li v-for="pageNum in previousPages" :key="pageNum">
-              <Link :href="typeof pageNum === 'number' ? '/artist/'+artist.artistId+'/?page=' + pageNum : '#'">{{pageNum}}</Link>
+              <Link :href="typeof pageNum === 'number' ? '/artist/'+artist.artist_id+'/?page=' + pageNum : '#'">{{pageNum}}</Link>
             </li>
             <li>
-              <Link :href="'/artist/'+artist.artistId+'/?page=' + currentPageNum" aria-current="page" class="active">{{currentPageNum}}</Link>
+              <Link :href="'/artist/'+artist.artist_id+'/?page=' + currentPageNum" aria-current="page" class="active">{{currentPageNum}}</Link>
             </li>
             <li v-for="pageNum in nextPages" :key="pageNum">
-              <Link :href="typeof pageNum === 'number' ? '/artist/'+artist.artistId+'/?page=' + pageNum : '#'">{{pageNum}}</Link>
+              <Link :href="typeof pageNum === 'number' ? '/artist/'+artist.artist_id+'/?page=' + pageNum : '#'">{{pageNum}}</Link>
             </li>
             <li>
-              <Link :class="currentPageNum >= lastPage ? 'disabled' : ''" :href="'/artist/'+artist.artistId+'/?page='+(currentPageNum+1)">Next</Link>
+              <Link :class="currentPageNum >= lastPage ? 'disabled' : ''" :href="'/artist/'+artist.artist_id+'/?page='+(currentPageNum+1)">Next</Link>
             </li>
           </ul>
         </nav>
